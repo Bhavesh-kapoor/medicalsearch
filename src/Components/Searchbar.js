@@ -5,17 +5,99 @@ import { Link } from 'react-router-dom';
 
 export default function Searchbar() {
     const [suggestionbox, setsuggestionbox] = useState(false);
+    const [enteredvalue, setenteredvalue] = useState([]);
 
     const handlesearchbarvalue = (e) => {
 
         e.target.value == '' ? setsuggestionbox(false) : setsuggestionbox(true);
 
+        if (e.key === 'Enter') {
+            if (e.target.value != '') {
+
+            let v =   enteredvalue.filter((elm)=>{
+
+                
+
+                    return elm  ==e.target.value.trim() ;
+                    
+                });
+
+                if(  v.length == 0){
+                setenteredvalue([...enteredvalue, e.target.value.trim()])
+                e.target.value = "";
+
+                }
+
+              
+
+
+
+
+
+                
+            }
+        }
+
+
+
+    }
+
+
+    const removearrayvalue=(e)=>{
+        setenteredvalue(enteredvalue.filter((elm)=>{
+
+                
+
+            return elm  !=e;
+            
+        }));
+
+
+        
     }
     return (
         <>
-              <Link to="/" > <div className='bg-white py-3 px-4 text-center shadow w-12'>
-                <AiOutlineArrowLeft  style={{ fontSize: '1rem' }} />
-            </div></Link>  
+
+            <div className='flex justify-between mx-2'>
+                <div>
+                    <Link to="/" > <div className='bg-white py-3 px-4 text-center shadow w-12'>
+                        <AiOutlineArrowLeft style={{ fontSize: '1rem' }} />
+                    </div></Link>
+
+                </div>
+                <div className='done'>
+                    <p className='text-[#9fcc3a] font-bold'>Done</p>
+                </div>
+            </div>
+
+            <div className='my-2'>
+                <div className='maindiv'>
+                    <div className='flex gap-2 flex-wrap mx-2'>
+
+                        {enteredvalue.map((e, index) => {
+                            return <>
+                                <div className='relative bg-[#9fcc3a] rounded-md text-sm py-1 px-1'>
+                                    <div className='absolute top-1 right-1 text-white ' onClick={()=>removearrayvalue(e)}>
+                                        X
+                                    </div>
+                                    <button className=' pr-5   rounded   text-white ' key={index}>{e}</button>
+                                </div>
+
+
+                            </>
+
+                        })}
+
+                    </div>
+
+                </div>
+
+
+
+
+
+            </div>
+
             <div className='relative -my-3'>
                 <div className='my-4 w-full relative '>
                     <BiSearch className='absolute translate-x-1 translate-y-3' style={{ fontSize: '1.5rem' }} />
@@ -75,6 +157,8 @@ export default function Searchbar() {
 
                 </div>
                     : ''}
+
+
             </div>
 
         </>

@@ -14,7 +14,7 @@ export default function Navbar() {
         </div>
 
         <div  className='Logo '>
-        <Link to='/search' >   <BiSearch  style={{ fontSize: '1.5rem' }} /> </Link>
+        <Link to='/search'  >   <BiSearch  style={{ fontSize: '1.5rem' }} /> </Link>
 
         </div>
             

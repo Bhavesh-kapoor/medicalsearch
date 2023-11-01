@@ -21,6 +21,7 @@ function App() {
         {cpathname == '/search' ? '' : <Navbar />}
 
         <Routes>
+          <Route path="/" element={<></>} />
           <Route path="/search" element={<Searchbar />} />
         </Routes>
 
