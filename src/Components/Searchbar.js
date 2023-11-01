@@ -1,5 +1,7 @@
 import React, { useState } from 'react'
 import { BiSearch } from 'react-icons/bi';
+import { AiOutlineArrowLeft } from 'react-icons/ai';
+import { Link } from 'react-router-dom';
 
 export default function Searchbar() {
     const [suggestionbox, setsuggestionbox] = useState(false);
@@ -11,7 +13,10 @@ export default function Searchbar() {
     }
     return (
         <>
-            <div className='relative'>
+              <Link to="/" > <div className='bg-white py-3 px-4 text-center shadow w-12'>
+                <AiOutlineArrowLeft  style={{ fontSize: '1rem' }} />
+            </div></Link>  
+            <div className='relative -my-3'>
                 <div className='my-4 w-full relative '>
                     <BiSearch className='absolute translate-x-1 translate-y-3' style={{ fontSize: '1.5rem' }} />
                     <input type='text' onKeyUp={handlesearchbarvalue} autoComplete='off' placeholder='Search Test Here' className=' px-8 bg-gray-50 rounded  focus:shadow focus:outline outline-1 outline-[#9fcc3a]  w-full py-3' />

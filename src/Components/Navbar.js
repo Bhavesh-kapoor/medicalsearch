@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { BiSearch } from 'react-icons/bi';
+import { Link } from 'react-router-dom';
 
 
 
@@ -13,7 +14,7 @@ export default function Navbar() {
         </div>
 
         <div  className='Logo '>
-            <BiSearch  style={{ fontSize: '1.5rem' }} />
+        <Link to='/search' >   <BiSearch  style={{ fontSize: '1.5rem' }} /> </Link>
 
         </div>
             
