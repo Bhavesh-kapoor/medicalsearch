@@ -3,12 +3,14 @@ import Navbar from "./Components/Navbar";
 import Searchbar from "./Components/Searchbar";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { useLocation } from "react-router-dom";
+import Result from "./Components/Result";
 
 
 function App() {
 
   const { pathname } = useLocation();
   const [cpathname, setcpathname] = useState(pathname);
+  const [fields, setFields] = useState([]);
 
 
   useEffect(() => {
@@ -18,11 +20,11 @@ function App() {
   return (
     <>
       <div className="Mainsite">
-        {cpathname == '/search' ? '' : <Navbar />}
+        {cpathname == '/search' ? '' : <Navbar fields={fields} setFields={setFields} />}
 
         <Routes>
-          <Route path="/" element={<></>} />
-          <Route path="/search" element={<Searchbar />} />
+          <Route path="/" element={<Result />} />
+          <Route path="/search" element={<Searchbar fields={fields} setFields={setFields} />} />
         </Routes>
 
       </div>

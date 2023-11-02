@@ -3,9 +3,8 @@ import { BiSearch } from 'react-icons/bi';
 import { AiOutlineArrowLeft } from 'react-icons/ai';
 import { Link } from 'react-router-dom';
 
-export default function Searchbar() {
+export default function Searchbar({fields,setFields}) {
     const [suggestionbox, setsuggestionbox] = useState(false);
-    const [enteredvalue, setenteredvalue] = useState([]);
 
     const handlesearchbarvalue = (e) => {
 
@@ -14,7 +13,7 @@ export default function Searchbar() {
         if (e.key === 'Enter') {
             if (e.target.value != '') {
 
-            let v =   enteredvalue.filter((elm)=>{
+            let v =   fields.filter((elm)=>{
 
                 
 
@@ -23,7 +22,7 @@ export default function Searchbar() {
                 });
 
                 if(  v.length == 0){
-                setenteredvalue([...enteredvalue, e.target.value.trim()])
+                setFields([...fields, e.target.value.trim()])
                 e.target.value = "";
 
                 }
@@ -44,7 +43,7 @@ export default function Searchbar() {
 
 
     const removearrayvalue=(e)=>{
-        setenteredvalue(enteredvalue.filter((elm)=>{
+        setFields(fields.filter((elm)=>{
 
                 
 
@@ -66,7 +65,7 @@ export default function Searchbar() {
 
                 </div>
                 <div className='done'>
-                    <p className='text-[#9fcc3a] font-bold'>Done</p>
+                 <Link  to="/">  <p className='text-[#9fcc3a] font-bold'>Done</p> </Link>
                 </div>
             </div>
 
@@ -74,7 +73,7 @@ export default function Searchbar() {
                 <div className='maindiv'>
                     <div className='flex gap-2 flex-wrap mx-2'>
 
-                        {enteredvalue.map((e, index) => {
+                        {fields.map((e, index) => {
                             return <>
                                 <div className='relative bg-[#9fcc3a] rounded-md text-sm py-1 px-1'>
                                     <div className='absolute top-1 right-1 text-white ' onClick={()=>removearrayvalue(e)}>
