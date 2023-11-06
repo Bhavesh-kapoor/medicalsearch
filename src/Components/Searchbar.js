@@ -3,8 +3,9 @@ import { BiSearch } from 'react-icons/bi';
 import { AiOutlineArrowLeft } from 'react-icons/ai';
 import { Link } from 'react-router-dom';
 
-export default function Searchbar({fields,setFields}) {
+export default function Searchbar({ fields, setFields, allpackages }) {
     const [suggestionbox, setsuggestionbox] = useState(false);
+    const [keywisesearch, setkeywisesearch] = useState([]);
 
     const handlesearchbarvalue = (e) => {
 
@@ -13,46 +14,85 @@ export default function Searchbar({fields,setFields}) {
         if (e.key === 'Enter') {
             if (e.target.value != '') {
 
-            let v =   fields.filter((elm)=>{
+                let v = fields.filter((elm) => {
 
-                
 
-                    return elm  ==e.target.value.trim() ;
-                    
+
+                    return elm == e.target.value.trim();
+
                 });
 
-                if(  v.length == 0){
-                setFields([...fields, e.target.value.trim()])
-                e.target.value = "";
+                if (v.length == 0) {
+                    setFields([...fields, e.target.value.trim().toLowerCase()])
+                    e.target.value = "";
 
                 }
 
-              
 
 
 
 
 
-                
+
+
             }
         }
 
 
 
+        if (e.target.value != '') {
+            let updatedvaue = allpackages.filter((elm) => {
+                return elm[0].test_name.toLowerCase().includes(e.target.value.toLowerCase());
+
+            });
+
+            setkeywisesearch(updatedvaue);
+
+        }
+
+
+
+
     }
 
+    const  valuetobesended=(clickedvalue)=>{
 
-    const removearrayvalue=(e)=>{
-        setFields(fields.filter((elm)=>{
+            let v = fields.filter((elm) => {
 
-                
 
-            return elm  !=e;
-            
-        }));
+
+                return elm == clickedvalue.trim();
+
+            });
+
+            if (v.length == 0) {
+                setFields([...fields, clickedvalue.trim()])
+                clickedvalue = "";
+
+            }
+
+            setsuggestionbox(false);
+
+
+
+
 
 
         
+    }
+
+
+    const removearrayvalue = (e) => {
+        setFields(fields.filter((elm) => {
+
+
+
+            return elm != e;
+
+        }));
+
+
+
     }
     return (
         <>
@@ -65,7 +105,7 @@ export default function Searchbar({fields,setFields}) {
 
                 </div>
                 <div className='done'>
-                 <Link  to="/">  <p className='text-[#9fcc3a] font-bold'>Done</p> </Link>
+                    <Link to="/">  <p className='text-[#9fcc3a] font-bold'>Done</p> </Link>
                 </div>
             </div>
 
@@ -74,16 +114,16 @@ export default function Searchbar({fields,setFields}) {
                     <div className='flex gap-2 flex-wrap mx-2'>
 
                         {fields.map((e, index) => {
-                            return <>
-                                <div className='relative bg-[#9fcc3a] rounded-md text-sm py-1 px-1'>
-                                    <div className='absolute top-1 right-1 text-white ' onClick={()=>removearrayvalue(e)}>
+                            return (
+                                <div key={index} className='relative bg-[#9fcc3a] rounded-md text-sm py-1 px-1'>
+                                    <div className='absolute top-1 right-1 text-white ' onClick={() => removearrayvalue(e)}>
                                         X
                                     </div>
                                     <button className=' pr-5   rounded   text-white ' key={index}>{e}</button>
                                 </div>
 
 
-                            </>
+                            )
 
                         })}
 
@@ -103,46 +143,40 @@ export default function Searchbar({fields,setFields}) {
                     <input type='text' onKeyUp={handlesearchbarvalue} autoComplete='off' placeholder='Search Test Here' className=' px-8 bg-gray-50 rounded  focus:shadow focus:outline outline-1 outline-[#9fcc3a]  w-full py-3' />
 
                 </div>
+                {keywisesearch.length > 0 ? suggestionbox  && keywisesearch.map((elm, i) => {
 
-                {suggestionbox ? <div className=' -translate-y-[0.80rem] absolute w-full  bg-gray-50 rounded'>
-                    <div className='bar '>
-                        <div className='list-items  border-b-2 py-3 px-2 border-[#9fcc3a] flex  items-center  '>
-                            <div className='image'>
-                                <img src='images/healthogo.png' className='w-14' />
+                    return <div key={i} className=''>
+                        <div className='bar '>
+                            <div className='list-items  border-b-2 py-3 px-2 border-[#9fcc3a] flex  items-center  '>
+                                <div className='image'>
+                                    <img src='images/healthogo.png' className='w-14' />
+
+                                </div>
+
+                                <div className='item mx-3 font-medium'  onClick={()=>valuetobesended(elm[0].test_name)}>
+                                    {elm[0].test_name}
+
+                                </div>
+
 
                             </div>
 
-                            <div className='item mx-3 font-medium'>
-                                Har
 
-                            </div>
+                        </div> </div>
 
+                })
+
+                : 
+                <div >
+                <div className='bar '>
+                    <div className='list-items  border-b-2 py-3 px-2 border-[#9fcc3a] flex  items-center  '>
+                        <div className='image'>
+                            <img src='images/healthogo.png' className='w-14' />
 
                         </div>
-                        <div className='list-items  border-b-2 py-3 px-2 border-[#9fcc3a] flex  items-center  '>
-                            <div className='image'>
-                                <img src='images/healthogo.png' className='w-14' />
 
-                            </div>
-
-                            <div className='item mx-3 font-medium'>
-                                Har
-
-                            </div>
-
-
-                        </div>
-                        <div className='list-items  border-b-2 py-3 px-2 border-[#9fcc3a] flex  items-center  '>
-                            <div className='image'>
-                                <img src='images/healthogo.png' className='w-14' />
-
-                            </div>
-
-                            <div className='item mx-3 font-medium'>
-                                Har
-
-                            </div>
-
+                        <div className='item mx-3 font-medium'>
+                        No Result Found
 
                         </div>
 
@@ -150,12 +184,23 @@ export default function Searchbar({fields,setFields}) {
                     </div>
 
 
+                </div> </div>
+                }
 
 
 
 
-                </div>
-                    : ''}
+
+
+
+
+
+
+
+
+
+
+
 
 
             </div>

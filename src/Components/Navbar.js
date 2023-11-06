@@ -15,7 +15,7 @@ export default function Navbar({fields}) {
         </div>
 
         <div  className='Logo '>
-        <Link to='/search'  >   <BiSearch  style={{ fontSize: '1.5rem' }} /> </Link>
+        <Link to='/search'  > <BiSearch  style={{ fontSize: '1.5rem' }} /> </Link>
 
         </div>
 
@@ -24,10 +24,7 @@ export default function Navbar({fields}) {
     </div>
    
 
-    {fields.map((element,i)=>{
-      return <p key={i}>{element}</p>
-
-    })}
+   
 
     </>
   )
