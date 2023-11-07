@@ -3,13 +3,6 @@ import Loading from './Loading';
 import { Link } from 'react-router-dom';
 
 
-
-const  createSlug=(str) =>{
-    return str
-      .toLowerCase()
-      .replace(/ /g, '-')
-      .replace(/[^\w-]+/g, '');
-  }
   
 
 
@@ -36,8 +29,8 @@ export default function Laboratory({ laboratories }) {
 
                 {laboratories.map((elm, i) => {
                     return <div key={i} className='bg-[brown] rounded-lg shadow max-w-sm cursor-pointer' >
-                        <div className='flex  items-center justify-center my-10 font-bold text-white uppercase'>
-                           <Link to={`/laboratory/${createSlug(elm[0].school_name)}`}> <h1> {elm[0].school_name}</h1></Link>
+                        <div className='flex  items-center justify-center my-5 font-bold text-white uppercase'>
+                           <Link to={`/laboratory/${elm[0].id}`}> <h1> {elm[0].school_name}</h1></Link>
 
                         </div>
 

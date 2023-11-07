@@ -22,15 +22,9 @@ function App() {
     axios.post('https://packages.foodtest.in/api/packages')
 
       .then(response => {
-        // setloading(false);
-
-
         setallapifetcheddata(response.data.data); // Handle the response data
 
-
-
       })
-
       .catch(error => {
 
         console.error('Error:', error); // Handle any errors
@@ -64,7 +58,7 @@ function App() {
 
         <Routes>
           <Route path="/" element={<Laboratory laboratories={laboratories} />} />
-          <Route path="/laboratory/:slug" element={<Getlaboratywisedata/>} />
+          <Route path="/laboratory/:id" element={<Getlaboratywisedata/>} />
           <Route path="/result" element={<Result fields={fields} allpackages={allapifetcheddata} />} />
           <Route path="/search" element={<Searchbar fields={fields} setFields={setFields} allpackages={allapifetcheddata} />} />
         </Routes>

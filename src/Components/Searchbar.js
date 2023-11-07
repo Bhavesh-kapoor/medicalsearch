@@ -105,7 +105,7 @@ export default function Searchbar({ fields, setFields, allpackages }) {
 
                 </div>
                 <div className='done'>
-                    <Link to="/">  <p className='text-[#9fcc3a] font-bold'>Done</p> </Link>
+                    <Link to="/result">  <p className='text-[#9fcc3a] font-bold'>Done</p> </Link>
                 </div>
             </div>
 
