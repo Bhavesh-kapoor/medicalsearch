@@ -34,6 +34,7 @@ function App() {
 
   const getlaboratories = () => {
     axios.post('https://packages.foodtest.in/api/laboratories').then((response) => {
+
     setlaboratires(response.data.data);
     
     }).catch((error)=>{
