@@ -15,11 +15,11 @@ export default function Result({ fields, allpackages }) {
 
     const filteredata = () => {
         const b=[]
-        let updatedfiltervaue = allpackages.map((elm) => {
+        let updatedfiltervaue = allpackages.map((elm) => {           
             for(let i of fields){
                 const regex = new RegExp(i,"i")
                 // console.log((elm[0].test_name).match(regex),regex ,elm[0].test_name)
-                if((elm[0].test_name).match(regex)){
+                if((elm[0].test_name).match(regex) || (elm[0].package).match(regex)){
                     b.push(elm)
                 }
             }

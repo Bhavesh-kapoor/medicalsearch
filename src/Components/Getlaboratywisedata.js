@@ -31,7 +31,6 @@ export default function Getlaboratywisedata() {
 
   useEffect(() => {
     fetchlabwisedata(id);
-
   }, [id]);
 
 

@@ -115,8 +115,8 @@ export default function Searchbar({ fields, setFields, allpackages }) {
 
                         {fields.map((e, index) => {
                             return (
-                                <div key={index} className='relative bg-[#9fcc3a] rounded-md text-sm py-1 px-1'>
-                                    <div className='absolute top-1 right-1 text-white ' onClick={() => removearrayvalue(e)}>
+                                <div key={index} className='relative bg-[#9fcc3a] rounded-md text-sm py-1 px-1 cursor-pointer group/item hover:bg-green-500' onClick={() => removearrayvalue(e)}>
+                                    <div className='absolute top-1 right-1 text-white group-hover/item:scale-150 group-hover/item:font-bold ' >
                                         X
                                     </div>
                                     <button className=' pr-5   rounded   text-white ' key={index}>{e}</button>
@@ -145,7 +145,7 @@ export default function Searchbar({ fields, setFields, allpackages }) {
                 </div>
                 {keywisesearch.length > 0 ? suggestionbox  && keywisesearch.map((elm, i) => {
 
-                    return <div key={i} className=''>
+                    return <div key={i} className='cursor-pointer hover:bg-gray-200'  onClick={()=>valuetobesended(elm[0].test_name)}>
                         <div className='bar '>
                             <div className='list-items  border-b-2 py-3 px-2 border-[#9fcc3a] flex  items-center  '>
                                 <div className='image'>
@@ -153,7 +153,7 @@ export default function Searchbar({ fields, setFields, allpackages }) {
 
                                 </div>
 
-                                <div className='item mx-3 font-medium'  onClick={()=>valuetobesended(elm[0].test_name)}>
+                                <div className='item mx-3 font-medium' >
                                     {elm[0].test_name}
 
                                 </div>
