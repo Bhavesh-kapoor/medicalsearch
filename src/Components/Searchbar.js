@@ -28,8 +28,7 @@ export default function Searchbar({ fields, setFields, allpackages }) {
         if (
           elm[0].test_name
             .toLowerCase()
-            .includes(e.target.value.toLowerCase()) ||
-          elm[0].package.toLowerCase().includes(e.target.value.toLowerCase())
+            .includes(e.target.value.toLowerCase())
         ) {
           return true;
         }
@@ -62,6 +61,16 @@ export default function Searchbar({ fields, setFields, allpackages }) {
   };
   return (
     <>
+    {/* {[1].map((e)=>{
+      for(let i=0; i<allpackages.length-1; i++){
+        const testname = allpackages[i][0].test_name
+        const regex = new RegExp(testname,"i")
+        for(let j=0 ; j<allpackages.length-1; j++){
+          if(((allpackages[j])[0].package).match(regex))
+          console.log(allpackages[j], allpackages[i])
+        }
+      }
+    })} */}
       <div className="flex justify-between mx-2">
         <div>
           <Link to="/">
@@ -119,7 +128,7 @@ export default function Searchbar({ fields, setFields, allpackages }) {
         {keywisesearch.length > 0 ? (
           suggestionbox &&
           keywisesearch.map((elm, i) => {
-            console.log(elm);
+            //console.log(elm);
             return (
               <div
                 key={i}
