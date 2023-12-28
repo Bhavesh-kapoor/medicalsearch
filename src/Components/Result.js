@@ -12,6 +12,14 @@ export default function Result({ fields, allpackages }) {
     const [data, setdata] = useState([]);
     const [loading, setloading] = useState(true);
 
+    const packagesInclude =(packages, packageName) =>{
+        for(let i of packages) {
+            if(i[0].test_name === packageName[0].test_name){
+                return false
+            }
+        }
+        return true
+    }
 
     const filteredata = () => {
         const b=[]
@@ -24,7 +32,9 @@ export default function Result({ fields, allpackages }) {
                     b.push(elm)
                 }
                 else if((elm[0].package).match(regex)){
-                    packages.push(elm)
+                    if(packagesInclude(packages, elm)){
+                        packages.push(elm)
+                    }
                 }
             }
         })
