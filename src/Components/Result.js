@@ -15,12 +15,16 @@ export default function Result({ fields, allpackages }) {
 
     const filteredata = () => {
         const b=[]
+        const packages =[]
         let updatedfiltervaue = allpackages.map((elm) => {           
             for(let i of fields){
                 const regex = new RegExp(i,"i")
                 // console.log((elm[0].test_name).match(regex),regex ,elm[0].test_name)
-                if((elm[0].test_name).match(regex) || (elm[0].package).match(regex)){
+                if((elm[0].test_name).match(regex)){
                     b.push(elm)
+                }
+                else if((elm[0].package).match(regex)){
+                    packages.push(elm)
                 }
             }
         })
@@ -31,6 +35,19 @@ export default function Result({ fields, allpackages }) {
         })
 
         // console.log(b);
+        let totalAmount = 0
+        b.forEach(element => {
+            totalAmount += element[0].mrp
+        });
+        
+        packages.forEach(element => {
+            if(element[0].mrp < totalAmount){
+                b.unshift(element)
+            }
+            else{
+                b.push(element)
+            }
+        });
 
         setdata(b);
 
