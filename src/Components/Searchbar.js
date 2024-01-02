@@ -55,7 +55,7 @@ export default function Searchbar({ fields, setFields, allpackages }) {
       const data =[]
       const nameMatch =[]
       updatedvaue.forEach(element => {
-        if((element[0].test_name).match(regex)){
+        if((element[0].test_name).match(regex) && ((element[0].test_name).toLowerCase()).startsWith((e.target.value).toLowerCase())){
           nameMatch.push(element)
         }else{
           data.push(element)
