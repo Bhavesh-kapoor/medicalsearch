@@ -24,18 +24,45 @@ export default function Searchbar({ fields, setFields, allpackages }) {
     }
 
     if (e.target.value != "") {
+      const regex = new RegExp(e.target.value,"i")
       let updatedvaue = allpackages.filter((elm) => {
         if (
-          elm[0].test_name
-            .toLowerCase()
-            .includes(e.target.value.toLowerCase())
+          (elm[0].test_name).match(regex) || (elm[0].package).match(regex)
         ) {
           return true;
         }
         return false;
       });
+      updatedvaue.sort((a,b)=>{
+        if(a[0].test_name>b[0].test_name ){
+          return 1;
+        }
+        else if (a[0].test_name<b[0].test_name ){
+          return -1
+        }else{
+          return 0;
+        }
+      })
 
-      setkeywisesearch(updatedvaue);
+      // updatedvaue.sort((a,b)=>{
+      //   if((a[0].test_name).match(regex)){
+      //     return -1
+      //   }if((b[0].test_name).match(regex)){
+      //     return -1
+      //   }
+      //   return 0
+      // })
+      const data =[]
+      const nameMatch =[]
+      updatedvaue.forEach(element => {
+        if((element[0].test_name).match(regex)){
+          nameMatch.push(element)
+        }else{
+          data.push(element)
+        }
+      });
+      console.log(data)
+      setkeywisesearch([...nameMatch, ...data]);
     }
   };
 
