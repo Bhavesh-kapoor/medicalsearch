@@ -27,7 +27,8 @@ export default function Searchbar({ fields, setFields, allpackages }) {
       const regex = new RegExp(e.target.value,"i")
       let updatedvaue = allpackages.filter((elm) => {
         if (
-          (elm[0].test_name).match(regex) || (elm[0].package).match(regex)
+          (elm[0].test_name).match(regex) 
+          // || (elm[0].package).match(regex)
         ) {
           return true;
         }
@@ -61,7 +62,7 @@ export default function Searchbar({ fields, setFields, allpackages }) {
           data.push(element)
         }
       });
-      console.log(data)
+     
       setkeywisesearch([...nameMatch, ...data]);
     }
   };
