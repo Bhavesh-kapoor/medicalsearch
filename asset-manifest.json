@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/medicalsearch/static/css/main.6730a0bf.css",
+    "main.js": "/medicalsearch/static/js/main.9f6ff925.js",
+    "index.html": "/medicalsearch/index.html",
+    "main.6730a0bf.css.map": "/medicalsearch/static/css/main.6730a0bf.css.map",
+    "main.9f6ff925.js.map": "/medicalsearch/static/js/main.9f6ff925.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.6730a0bf.css",
+    "static/js/main.9f6ff925.js"
+  ]
+}
