@@ -2,12 +2,13 @@ import React, { useState } from "react";
 import { BiSearch } from "react-icons/bi";
 import { AiOutlineArrowLeft } from "react-icons/ai";
 import { Link } from "react-router-dom";
+import axios from 'axios';
 
 export default function Searchbar({ fields, setFields, allpackages }) {
   const [suggestionbox, setsuggestionbox] = useState(false);
   const [keywisesearch, setkeywisesearch] = useState([]);
 
-  const handlesearchbarvalue = (e) => {
+  const handlesearchbarvalue = async(e) => {
     e.target.value == "" ? setsuggestionbox(false) : setsuggestionbox(true);
 
     if (e.key === "Enter") {
@@ -23,72 +24,66 @@ export default function Searchbar({ fields, setFields, allpackages }) {
       }
     }
 
-    if (e.target.value != "") {
-      const regex = new RegExp(e.target.value,"i")
-      let updatedvaue = allpackages.filter((elm) => {
-        if (
-          (elm[0].test_name).match(regex) 
-          // || (elm[0].package).match(regex)
-        ) {
-          return true;
-        }
-        return false;
-      });
-      updatedvaue.sort((a,b)=>{
-        if(a[0].test_name>b[0].test_name ){
-          return 1;
-        }
-        else if (a[0].test_name<b[0].test_name ){
-          return -1
-        }else{
-          return 0;
-        }
-      })
+    if (e.target.value !== '') {
+      const regex = new RegExp(e.target.value, 'i');
+    
+      try {
+        const response = await axios.post('https://packages.foodtest.in/api/testsearch', {
+          search: e.target.value,
+        });
+    
+        const apiData = response.data;
 
-      // updatedvaue.sort((a,b)=>{
-      //   if((a[0].test_name).match(regex)){
-      //     return -1
-      //   }if((b[0].test_name).match(regex)){
-      //     return -1
-      //   }
-      //   return 0
-      // })
-      const data =[]
-      const nameMatch =[]
-      updatedvaue.forEach(element => {
-        if((element[0].test_name).match(regex) && ((element[0].test_name).toLowerCase()).startsWith((e.target.value).toLowerCase())){
-          nameMatch.push(element)
-        }else{
-          data.push(element)
+    
+        // Ensure that apiData is an array
+        if (apiData && Array.isArray(apiData.data)) {
+          setkeywisesearch(apiData.data);
+
+          console.log(keywisesearch);
+          // const filteredData = apiData.data.filter((elm) => {
+          //   const testName = elm.test_name && elm.test_name.toLowerCase();
+          //   return testName && testName.match(regex) && testName.startsWith(e.target.value.toLowerCase());
+          // });
+    
+          // filteredData.sort((a, b) => a.test_name.localeCompare(b.test_name));
+    
+          // setkeywisesearch(filteredData);
+
+          console.log(fields);
+        } else {
+          console.error('Invalid response format from the API:', apiData);
+          // Handle the error, e.g., set an error state or display a message to the user
         }
-      });
-     
-      setkeywisesearch([...nameMatch, ...data]);
+      } catch (error) {
+        console.error('Error sending POST request or handling response:', error);
+        // Handle the error, e.g., set an error state or display a message to the user
+      }
     }
   };
 
-  const valuetobesended = (clickedvalue) => {
-    let v = fields.filter((elm) => {
-      return elm == clickedvalue.trim();
-    });
 
-    if (v.length == 0) {
-      setFields([...fields, clickedvalue.trim()]);
-      clickedvalue = "";
-    }
+const valuetobesended = (clickedvalue) => {
+  let v = fields.filter((elm) => {
+    return elm == clickedvalue.trim();
+  });
 
-    setsuggestionbox(false);
-  };
+  if (v.length == 0) {
+    setFields([...fields, clickedvalue.trim()]);
+    clickedvalue = "";
+  }
 
-  const removearrayvalue = (e) => {
-    setFields(
-      fields.filter((elm) => {
-        return elm != e;
-      })
-    );
-  };
-  return (
-    <>
+  setsuggestionbox(false);
+};
+
+const removearrayvalue = (e) => {
+  setFields(
+    fields.filter((elm) => {
+      return elm != e;
+    })
+  );
+};
+return (
+  <>
     {/* {[1].map((e)=>{
       for(let i=0; i<allpackages.length-1; i++){
         const testname = allpackages[i][0].test_name
@@ -99,107 +94,107 @@ export default function Searchbar({ fields, setFields, allpackages }) {
         }
       }
     })} */}
-      <div className="flex justify-between mx-2">
-        <div>
-          <Link to="/">
-            {" "}
-            <div className="bg-white py-3 px-4 text-center shadow w-12">
-              <AiOutlineArrowLeft style={{ fontSize: "1rem" }} />
-            </div>
-          </Link>
-        </div>
-        <div className="done">
-          <Link to="/result">
-            {" "}
-            <p className="text-[#9fcc3a] font-bold">Done</p>{" "}
-          </Link>
-        </div>
-      </div>
-
-      <div className="my-2">
-        <div className="maindiv">
-          <div className="flex gap-2 flex-wrap mx-2">
-            {fields.map((e, index) => {
-              return (
-                <div
-                  key={index}
-                  className="relative bg-[#9fcc3a] rounded-md text-sm py-1 px-1 cursor-pointer group/item hover:bg-green-500"
-                  onClick={() => removearrayvalue(e)}
-                >
-                  <div className="absolute top-1 right-1 text-white group-hover/item:scale-150 group-hover/item:font-bold ">
-                    X
-                  </div>
-                  <button className=" pr-5   rounded   text-white " key={index}>
-                    {e}
-                  </button>
-                </div>
-              );
-            })}
+    <div className="flex justify-between mx-2">
+      <div>
+        <Link to="/">
+          {" "}
+          <div className="bg-white py-3 px-4 text-center shadow w-12">
+            <AiOutlineArrowLeft style={{ fontSize: "1rem" }} />
           </div>
-        </div>
+        </Link>
       </div>
+      <div className="done">
+        <Link to="/result">
+          {" "}
+          <p className="text-[#9fcc3a] font-bold">Done</p>{" "}
+        </Link>
+      </div>
+    </div>
 
-      <div className="relative -my-3">
-        <div className="my-4 w-full relative ">
-          <BiSearch
-            className="absolute translate-x-1 translate-y-3"
-            style={{ fontSize: "1.5rem" }}
-          />
-          <input
-            type="text"
-            onKeyUp={handlesearchbarvalue}
-            autoComplete="off"
-            placeholder="Search Test Here"
-            className=" px-8 bg-gray-50 rounded  focus:shadow focus:outline outline-1 outline-[#9fcc3a]  w-full py-3"
-          />
-        </div>
-        {keywisesearch.length > 0 ? (
-          suggestionbox &&
-          keywisesearch.map((elm, i) => {
-            //console.log(elm);
+    <div className="my-2">
+      <div className="maindiv">
+        <div className="flex gap-2 flex-wrap mx-2">
+          {fields.map((e, index) => {
             return (
               <div
-                key={i}
-                className="cursor-pointer hover:bg-gray-200"
-                onClick={() => valuetobesended(elm[0].test_name)}
+                key={index}
+                className="relative bg-[#9fcc3a] rounded-md text-sm py-1 px-1 cursor-pointer group/item hover:bg-green-500"
+                onClick={() => removearrayvalue(e)}
               >
-                <div className="bar ">
-                  <div className="list-items  border-b-2 py-3 px-2 border-[#9fcc3a] flex  items-center  ">
-                    <div className="image">
-                      <img src="images/healthogo.png" className="w-14" />
-                    </div>
-
-                    <div className="item mx-3 font-medium">
-                      <div className="flex gap-2 items-center">
-                        <p> {elm[0].test_name}</p>
-                        <p className="font-bold px-2 py-1 bg-gray-300 rounded-full">₹{elm[0].mrp}</p>
-                        <p className={`${elm[0].type==='TEST'?'bg-green-700/25':'bg-purple-700/25'} rounded-full p-2 py-1 text-sm`}>
-                          {elm[0].type}
-                        </p>
-                      </div>
-                      <div>
-                        <p>{elm[0]?.package}</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>{" "}
+                <div className="absolute top-1 right-1 text-white group-hover/item:scale-150 group-hover/item:font-bold ">
+                  X
+                </div>
+                <button className=" pr-5   rounded   text-white " key={index}>
+                  {e}
+                </button>
               </div>
             );
-          })
-        ) : (
-          <div>
-            <div className="bar ">
-              <div className="list-items  border-b-2 py-3 px-2 border-[#9fcc3a] flex  items-center  ">
-                <div className="image">
-                  <img src="images/healthogo.png" className="w-14" />
-                </div>
-
-                <div className="item mx-3 font-medium">No Result Found</div>
-              </div>
-            </div>{" "}
-          </div>
-        )}
+          })}
+        </div>
       </div>
-    </>
-  );
+    </div>
+
+    <div className="relative -my-3">
+      <div className="my-4 w-full relative ">
+        <BiSearch
+          className="absolute translate-x-1 translate-y-3"
+          style={{ fontSize: "1.5rem" }}
+        />
+        <input
+          type="text"
+          onKeyUp={handlesearchbarvalue}
+          autoComplete="off"
+          placeholder="Search Test Here"
+          className=" px-8 bg-gray-50 rounded  focus:shadow focus:outline outline-1 outline-[#9fcc3a]  w-full py-3"
+        />
+      </div>
+      {keywisesearch.length > 0 ? (
+        suggestionbox &&
+        keywisesearch.map((elm, i) => {
+          //console.log(elm);
+          return (
+            <div
+              key={i}
+              className="cursor-pointer hover:bg-gray-200"
+              onClick={() => valuetobesended(elm.test_name)}
+            >
+              <div className="bar ">
+                <div className="list-items  border-b-2 py-3 px-2 border-[#9fcc3a] flex  items-center  ">
+                  <div className="image">
+                    <img src="images/healthogo.png" className="w-14" />
+                  </div>
+
+                  <div className="item mx-3 font-medium">
+                    <div className="flex gap-2 items-center">
+                      <p> {elm.test_name}</p>
+                      <p className="font-bold px-2 py-1 bg-gray-300 rounded-full">₹{elm.mrp}</p>
+                      <p className={`${elm.type === 'TEST' ? 'bg-green-700/25' : 'bg-purple-700/25'} rounded-full p-2 py-1 text-sm`}>
+                        {elm.type}
+                      </p>
+                    </div>
+                    <div>
+                      <p></p>
+                    </div>
+                  </div>
+                </div>
+              </div>{" "}
+            </div>
+          );
+        })
+      ) : (
+        <div>
+          <div className="bar ">
+            <div className="list-items  border-b-2 py-3 px-2 border-[#9fcc3a] flex  items-center  ">
+              <div className="image">
+                <img src="images/healthogo.png" className="w-14" />
+              </div>
+
+              <div className="item mx-3 font-medium">No Result Found</div>
+            </div>
+          </div>{" "}
+        </div>
+      )}
+    </div>
+  </>
+);
 }
