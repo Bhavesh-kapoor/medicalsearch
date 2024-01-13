@@ -160,9 +160,9 @@ return (
             >
               <div className="bar ">
                 <div className="list-items  border-b-2 py-3 px-2 border-[#9fcc3a] flex  items-center  ">
-                  <div className="image">
+                  {/* <div className="image">
                     <img src="images/healthogo.png" className="w-14" />
-                  </div>
+                  </div> */}
 
                   <div className="item mx-3 font-medium">
                     <div className="flex gap-2 items-center">
@@ -185,9 +185,9 @@ return (
         <div>
           <div className="bar ">
             <div className="list-items  border-b-2 py-3 px-2 border-[#9fcc3a] flex  items-center  ">
-              <div className="image">
+              {/* <div className="image">
                 <img src="images/healthogo.png" className="w-14" />
-              </div>
+              </div> */}
 
               <div className="item mx-3 font-medium">No Result Found</div>
             </div>
