@@ -39,7 +39,6 @@ export default function Searchbar({ fields, setFields, allpackages }) {
         if (apiData && Array.isArray(apiData.data)) {
           setkeywisesearch(apiData.data);
 
-          console.log(keywisesearch);
           // const filteredData = apiData.data.filter((elm) => {
           //   const testName = elm.test_name && elm.test_name.toLowerCase();
           //   return testName && testName.match(regex) && testName.startsWith(e.target.value.toLowerCase());
@@ -49,7 +48,6 @@ export default function Searchbar({ fields, setFields, allpackages }) {
     
           // setkeywisesearch(filteredData);
 
-          console.log(fields);
         } else {
           console.error('Invalid response format from the API:', apiData);
           // Handle the error, e.g., set an error state or display a message to the user
@@ -70,6 +68,11 @@ const valuetobesended = (clickedvalue) => {
   if (v.length == 0) {
     setFields([...fields, clickedvalue.trim()]);
     clickedvalue = "";
+    const inputField = document.querySelector('input[type="text"]');
+    if (inputField) {
+      inputField.value = '';
+    }
+
   }
 
   setsuggestionbox(false);
