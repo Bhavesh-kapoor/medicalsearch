@@ -14,6 +14,7 @@ function App() {
   const { pathname } = useLocation();
   const [cpathname, setcpathname] = useState(pathname);
   const [fields, setFields] = useState([]);
+  const [type, setType] = useState(1);
   const [laboratories, setlaboratires] = useState([]);
   const [allapifetcheddata, setallapifetcheddata] = useState([]);
 
@@ -60,8 +61,8 @@ function App() {
         <Routes>
           <Route path="/" element={<Laboratory laboratories={laboratories} />} />
           <Route path="/laboratory/:id" element={<Getlaboratywisedata/>} />
-          <Route path="/result" element={<Result fields={fields} allpackages={allapifetcheddata} />} />
-          <Route path="/search" element={<Searchbar fields={fields} setFields={setFields} allpackages={allapifetcheddata} />} />
+          <Route path="/result" element={<Result fields={fields} allpackages={allapifetcheddata}  type={type}/>} />
+          <Route path="/search" element={<Searchbar fields={fields} setFields={setFields} allpackages={allapifetcheddata} type={type} setType={setType} />} />
         </Routes>
 
       </div>

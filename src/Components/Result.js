@@ -8,67 +8,19 @@ import { GiLightningFrequency } from 'react-icons/gi';
 
 
 // 
-export default function Result({ fields, allpackages }) {
+export default function Result({ fields, allpackages ,type}) {
     const [data, setdata] = useState([]);
     const [loading, setloading] = useState(true);
 
-    // const packagesInclude =(packages, packageName) =>{
-    //     for(let i of packages) {
-    //         if(i.test_name.trim() === packageName.test_name.trim()){
-    //             return false
-    //         }
-    //     }
-    //     return true
-    // }
-
-    // const filteredata = () => {
-    //     const b=[]
-    //     const packages =[]
-    //     let updatedfiltervaue = allpackages.map((elm) => {           
-    //         for(let i of fields){
-    //             const regex = new RegExp(i,"i")
-    //             // console.log((elm.test_name).match(regex),regex ,elm.test_name)
-    //             if((elm.test_name.trim()).match(regex)){
-    //                 b.push(elm)
-    //             }
-    //             else if((elm.package).match(regex)){
-    //                 if(packagesInclude(packages, elm)){
-    //                     packages.push(elm)
-    //                 }
-    //             }
-    //         }
-    //     })
-
-    //     b.sort((a,b)=>{
-    //         return a.mrp  -  b.mrp;
-
-    //     })
-
-    //     // console.log(b);
-    //     let totalAmount = 0
-    //     b.forEach(element => {
-    //         totalAmount += element.mrp
-    //     });
-
-    //     packages.forEach(element => {
-    //         if(element.mrp < totalAmount){
-    //             b.unshift(element)
-    //         }
-    //         else{
-    //             b.push(element)
-    //         }
-    //     });
-
-    //     setdata(b);
-
-    // }
+    console.log(type);
 
 
     const getfeilddata = async () => {
-        
+
         try {
             const response = await axios.post('https://packages.foodtest.in/api/getsearchdata', {
                 search: fields,
+                type: type,
             });
 
             const apiData = response.data;
@@ -107,7 +59,8 @@ export default function Result({ fields, allpackages }) {
 
         }
 
-    }, [fields])
+    }, [fields]);
+  
 
 
 
